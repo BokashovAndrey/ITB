@@ -12,19 +12,18 @@ namespace ITB.DataFilesApp
     using System;
     using System.Collections.Generic;
     
-    public partial class Order
+    public partial class Month
     {
-        public int Id { get; set; }
-        public int ClientId { get; set; }
-        public int ProductId { get; set; }
-        public int StatusId { get; set; }
-        public Nullable<int> TotalPrice { get; set; }
-        public int IdMonth { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Month()
+        {
+            this.Order = new HashSet<Order>();
+        }
     
-        public virtual Client Client { get; set; }
-        public virtual Month Month { get; set; }
-        public virtual Product Product { get; set; }
-        public virtual Product Product1 { get; set; }
-        public virtual Status Status { get; set; }
+        public int Id { get; set; }
+        public string MonthName { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Order> Order { get; set; }
     }
 }

@@ -26,24 +26,21 @@
                 HorizontalAlignment="Center"
                 Orientation="Horizontal">
                 <Button
-                    Content="Найти по ID"
+                    Content="Найти по месяцу"
                     Name="Find"
                     Click="Find_Click"/>
-                <TextBox
+                <ComboBox
                     Name="FindValue"/>
             </StackPanel>
             <StackPanel>
-                <TextBlock
-                    Name="SumBox"/>
-                <TextBlock
-                    Name="value1"
-                    Width="700"/>
-                <TextBlock
-                    Name="value2"/>
                 <Button
                     Name="SumBut"
-                    Click="SumBut_Click"/>
-                
+                    Click="SumBut_Click"
+                    Content="Показать отчет"
+                    VerticalContentAlignment="Center"
+                    HorizontalContentAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+
+
             </StackPanel>
             
         </StackPanel>

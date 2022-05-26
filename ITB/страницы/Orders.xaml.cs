@@ -22,29 +22,34 @@ namespace ITB.страницы
     /// </summary>
     public partial class Orders : Page
     {
+        string findName;
         ITBEntities dataEntities = new ITBEntities();
         public Orders()
         {
             InitializeComponent();
+            FindValue.SelectedValuePath = "Id";
+            FindValue.DisplayMemberPath = "MonthName";
+            FindValue.ItemsSource = Connect.entObj.Month.ToList();
         }
 
         private void Find_Click(object sender, RoutedEventArgs e)
         {
-            if (FindValue.Text != "")
+            if (Convert.ToInt32(FindValue.SelectedValue) != 13)
             {
-                int value = Convert.ToInt32(FindValue.Text);
+                findName = FindValue.Text;
+                int value = Convert.ToInt32(FindValue.SelectedValue);
                 var query =
                 from product in dataEntities.Order
-                where product.Id == value
-                select new { product.Id, ProductId = product.Product.Name, ClientId = product.Client.Surname, StatusId = product.Status.StatusName };
+                where product.IdMonth == value
+                select new { product.Id, ProductId = product.Product.Name, ClientId = product.Client.Surname, StatusId = product.Status.StatusName,Month = product.Month.MonthName, TotalPrice = product.Product.Price };
 
                 OrderGrid.ItemsSource = query.ToList();
             }
             else
-            {
+            {          
                 var query =
                 from product in dataEntities.Order
-                select new { product.Id, ProductId = product.Product.Name,ClientId = product.Client.Surname, StatusId = product.Status.StatusName,TotalPrice = product.Product.Price};
+                select new { product.Id, ProductId = product.Product.Name,ClientId = product.Client.Surname, StatusId = product.Status.StatusName, Month = product.Month.MonthName, TotalPrice = product.Product.Price};
 
                 OrderGrid.ItemsSource = query.ToList();
             }
@@ -52,6 +57,7 @@ namespace ITB.страницы
 
         private void SumBut_Click(object sender, RoutedEventArgs e)
         {
+            findName = FindValue.Text;
             int count = 0;
             int count2 = 0;
             int count3 = 0;
@@ -61,7 +67,7 @@ namespace ITB.страницы
             double sum = 0d;
             for (int i = 0; i < OrderGrid.Items.Count; i++)
             {
-                sum += double.Parse((OrderGrid.Columns[4].GetCellContent(OrderGrid.Items[i]) as TextBlock).Text);
+                sum += double.Parse((OrderGrid.Columns[5].GetCellContent(OrderGrid.Items[i]) as TextBlock).Text);
                 if ((OrderGrid.Columns[1].GetCellContent(OrderGrid.Items[i]) as TextBlock).Text == v1)
                     count++;
                 else if ((OrderGrid.Columns[1].GetCellContent(OrderGrid.Items[i]) as TextBlock).Text == v2)
@@ -74,10 +80,16 @@ namespace ITB.страницы
                     $"Общая сумма заказов - {sum}," +
                     $"\nВсего заказов на 'Разработка ПО на заказ' - {count}" +
                     $"\nВсего заказов на 'Установка офисных программ' - {count2}" +
-                    $"\nВсего заказов на 'Установка программ для повседневного использования' - {count3}",
+                    $"\nВсего заказов на 'Установка программ для повседневного использования' - {count3}" +
+                    $"\nВсего заказов за {findName} - {OrderGrid.Items.Count}",
                     "Уведомление",
                     MessageBoxButton.OK,
                     MessageBoxImage.Information);
+        }
+
+        private void Test_Click(object sender, RoutedEventArgs e)
+        {
+            TTest.Text = FindValue.Text;
         }
     }
 }

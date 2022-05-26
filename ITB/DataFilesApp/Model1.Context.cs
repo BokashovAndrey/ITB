@@ -27,10 +27,11 @@ namespace ITB.DataFilesApp
     
         public virtual DbSet<Client> Client { get; set; }
         public virtual DbSet<Employer> Employer { get; set; }
+        public virtual DbSet<Month> Month { get; set; }
         public virtual DbSet<Order> Order { get; set; }
         public virtual DbSet<Product> Product { get; set; }
         public virtual DbSet<Role> Role { get; set; }
-        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<Status> Status { get; set; }
+        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
     }
 }
